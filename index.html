@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSX Investment Journey | Inspiring Women</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap');
+        
+        /* Purple Mandala Background Pattern */
+        body {
+            background-color: #8E44AD;
+            background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%239B59B6' stroke-width='1' opacity='0.3'%3E%3Ccircle cx='200' cy='200' r='180'/%3E%3Ccircle cx='200' cy='200' r='150'/%3E%3Ccircle cx='200' cy='200' r='120'/%3E%3Ccircle cx='200' cy='200' r='90'/%3E%3Ccircle cx='200' cy='200' r='60'/%3E%3Ccircle cx='200' cy='200' r='30'/%3E%3Cpath d='M200 20 L200 380 M20 200 L380 200'/%3E%3Cpath d='M200 20 Q280 110 380 200 Q280 290 200 380 Q120 290 20 200 Q120 110 200 20'/%3E%3Cpath d='M60 60 L340 340 M340 60 L60 340'/%3E%3Cellipse cx='200' cy='200' rx='160' ry='80'/%3E%3Cellipse cx='200' cy='200' rx='80' ry='160'/%3E%3Cpath d='M200 20 Q320 200 200 380 Q80 200 200 20'/%3E%3Ccircle cx='200' cy='50' r='15'/%3E%3Ccircle cx='200' cy='350' r='15'/%3E%3Ccircle cx='50' cy='200' r='15'/%3E%3Ccircle cx='350' cy='200' r='15'/%3E%3Cpath d='M100 100 Q200 150 300 100 Q250 200 300 300 Q200 250 100 300 Q150 200 100 100'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 400px 400px;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+        }
+        .glow-animation { animation: glow 2s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-animation { animation: float 3s ease-in-out infinite; }
+        .event-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(51, 65, 85, 0.9));
+            border-left: 4px solid;
+        }
+        .event-positive { border-color: #22c55e; }
+        .event-negative { border-color: #ef4444; }
+        .event-neutral { border-color: #eab308; }
+        
+        /* Inspiring Women Brand Styles */
+        .iw-brand-text {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+        .iw-footer {
+            background: linear-gradient(135deg, rgba(142, 68, 173, 0.4), rgba(139, 92, 246, 0.3));
+            border-top: 2px solid #E9A22B;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div id="app" class="container mx-auto px-4 py-8"></div>
+
+    <script>
+        // Historical Events Database - Why prices moved each year
+        const historicalEvents = {
+            2010: {
+                market: "KSE-100 recovered to 12,022 points (+28%). Post-2008 crisis recovery continues.",
+                events: [
+                    { type: "positive", text: "Market recovery from 2008 global financial crisis" },
+                    { type: "negative", text: "Devastating floods affected 20 million people" },
+                    { type: "neutral", text: "IMF program ongoing - economy stabilizing" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Oil prices recovered to $80/barrel. OGDC/PPL benefited from higher revenues.",
+                    "Banking": "Banks recovering from 2008 crisis. Interest rates stabilizing around 12-13%.",
+                    "Cement": "Construction activity picking up. Housing demand growing.",
+                    "Fertilizer": "Agriculture sector rebounding. Subsidized gas prices supporting margins.",
+                    "Power": "IPPs earning steady capacity payments. Circular debt starting to build.",
+                    "Footwear & Tyres": "Post-crisis recovery. Servis expanding retail network. Tyre demand growing."
+                }
+            },
+            2011: {
+                market: "KSE-100 fell 5.6% to 11,348. Global uncertainty and domestic challenges.",
+                events: [
+                    { type: "negative", text: "Osama bin Laden raid strained US-Pakistan relations" },
+                    { type: "negative", text: "Energy crisis intensified - 12-18 hour load shedding" },
+                    { type: "negative", text: "Inflation hit 14% - highest in 3 years" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Circular debt crisis emerging. Rs148bn stuck in receivables for OGDC/PPL.",
+                    "Banking": "NPLs increased due to energy crisis affecting businesses.",
+                    "Cement": "Exports declined 30% as Afghan demand fell.",
+                    "Fertilizer": "Gas supply curtailments began affecting production.",
+                    "Power": "Circular debt reached Rs500bn. IPP payments delayed.",
+                    "Footwear & Tyres": "Energy crisis hurt manufacturing. Load shedding impacted factories."
+                }
+            },
+            2012: {
+                market: "KSE-100 surged 49% to 16,905. Best year since 2009.",
+                events: [
+                    { type: "positive", text: "Political stability - democratic government completing term" },
+                    { type: "positive", text: "Foreign investors returned - MSCI Frontier inclusion talk" },
+                    { type: "neutral", text: "IMF program concluded successfully" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Oil production peaked at 66,000 bpd. Gas at 4.3 bcfd (highest ever).",
+                    "Banking": "Profitability improved. Government borrowing increased deposits.",
+                    "Cement": "Local demand up 10%. Housing construction boom began.",
+                    "Fertilizer": "FFC dividend 190% (Rs19/share). Strong agriculture season.",
+                    "Power": "Some circular debt cleared. IPPs received partial payments.",
+                    "Footwear & Tyres": "Market rally boosted sector. Retail expansion continued."
+                }
+            },
+            2013: {
+                market: "KSE-100 gained 49.4% to 25,261. Two consecutive 49%+ years!",
+                events: [
+                    { type: "positive", text: "First democratic transition - PML-N won elections" },
+                    { type: "positive", text: "CPEC announced - $46 billion investment plan" },
+                    { type: "positive", text: "Security situation improved significantly" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Gas prices frozen at Rs580/mmbtu (would stay until 2017).",
+                    "Banking": "Policy rate cut to 9%. Banks adjusted to lower spreads.",
+                    "Cement": "CPEC excitement boosted cement stocks. Lucky +45%.",
+                    "Fertilizer": "Subsidized gas = high margins. FFC/EFERT thrived.",
+                    "Power": "New power policy announced. Coal projects planned.",
+                    "Footwear & Tyres": "GSP Plus granted by EU (Dec 2013)! Duty-free access to 96% of exports."
+                }
+            },
+            2014: {
+                market: "KSE-100 up 27.2% to 32,131. Oil price crash began in Q4.",
+                events: [
+                    { type: "positive", text: "OGDC hit all-time high Rs287.84 in January" },
+                    { type: "negative", text: "Oil crashed from $115 to $55 (Jun-Dec)" },
+                    { type: "positive", text: "Military operation Zarb-e-Azb improved security" }
+                ],
+                sectors: {
+                    "Oil & Gas": "OGDC peaked at Rs287 then crashed 40% as oil fell. PPL similar.",
+                    "Banking": "UBL/HBL benefited from rate stability. Profitability up 15%.",
+                    "Cement": "Lucky cement expanded. Sector up 30% on CPEC hopes.",
+                    "Fertilizer": "Record year. Gas subsidy = windfall profits.",
+                    "Power": "HUBC/KAPCO stable. Capacity payments continued.",
+                    "Footwear & Tyres": "GSP Plus BOOM! Footwear exports to EU +121%. SRVI surged 50%."
+                }
+            },
+            2015: {
+                market: "KSE-100 barely up 2.1% to 32,816. Oil sector dragged market.",
+                events: [
+                    { type: "negative", text: "Global oil prices collapsed to $35/barrel" },
+                    { type: "positive", text: "Pakistan upgraded to MSCI Emerging Markets" },
+                    { type: "positive", text: "CPEC projects began - roads, power plants" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Terrible year. OGDC/PPL profits halved. Dividends cut 30%.",
+                    "Banking": "Policy rate cut to 6%. NIMs compressed.",
+                    "Cement": "CPEC construction boom! Lucky +60%. Capacity additions.",
+                    "Fertilizer": "Mixed year. Gas curtailments increased in winter.",
+                    "Power": "New IPPs coming online. HUBC expanded to coal.",
+                    "Footwear & Tyres": "GSP Plus continued to benefit exports. EU share of exports reached 54%."
+                }
+            },
+            2016: {
+                market: "KSE-100 up 45.7% to 47,807. Stellar year despite global worries.",
+                events: [
+                    { type: "positive", text: "Cement consumption hit 35 million tons (record)" },
+                    { type: "positive", text: "Foreign buying accelerated - MSCI inclusion" },
+                    { type: "neutral", text: "Panama Papers scandal emerged (PM Sharif named)" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Oil recovered to $55. Slight improvement in E&P earnings.",
+                    "Banking": "Rate cuts ended. Spreads stabilized. HBL up 40%.",
+                    "Cement": "Golden year! Lucky +80%. Construction boom peaked.",
+                    "Fertilizer": "Gas prices still frozen. High profitability continued.",
+                    "Power": "CPEC power projects accelerated. Chinese IPPs began.",
+                    "Footwear & Tyres": "Tyre sales booming. Motorcycle/agricultural tyre demand surged."
+                }
+            },
+            2017: {
+                market: "KSE-100 at 40,471 (-15.3%). First negative year since 2011.",
+                events: [
+                    { type: "negative", text: "PM Nawaz Sharif disqualified over Panama Papers" },
+                    { type: "negative", text: "Foreign selling accelerated after MSCI inclusion" },
+                    { type: "positive", text: "CPEC entered peak construction phase" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Gas prices finally hiked after 4 years. Margins compressed.",
+                    "Banking": "Rate hike cycle began. NPLs remained elevated.",
+                    "Cement": "Peak production. But oversupply fears emerged.",
+                    "Fertilizer": "Gas price increase hit margins. EFERT worst affected.",
+                    "Power": "Capacity payments ballooned. Circular debt grew again.",
+                    "Footwear & Tyres": "Market correction hit sector. But exports remained stable."
+                }
+            },
+            2018: {
+                market: "KSE-100 crashed 8.4% to 37,067. Currency crisis began.",
+                events: [
+                    { type: "negative", text: "Rupee devalued 25% (Rs105 to Rs140 vs USD)" },
+                    { type: "negative", text: "IMF approached for 13th bailout" },
+                    { type: "neutral", text: "PTI won elections - Imran Khan became PM" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Currency depreciation mixed - revenues up but costs too.",
+                    "Banking": "Policy rate hiked to 10%. NIMs improved.",
+                    "Cement": "Cement prices fell 30-50% in stock market. Oversupply hit.",
+                    "Fertilizer": "Input costs rose with rupee fall. Margins squeezed.",
+                    "Power": "KAPCO/HUBC struggling with circular debt Rs1.2 trillion.",
+                    "Footwear & Tyres": "Rupee depreciation helped exports but hurt raw material costs."
+                }
+            },
+            2019: {
+                market: "KSE-100 down 1.7% to 40,735. IMF program began.",
+                events: [
+                    { type: "negative", text: "Policy rate hiked to 13.25% (highest since 2009)" },
+                    { type: "positive", text: "$6 billion IMF program approved" },
+                    { type: "neutral", text: "FATF grey list concerns persisted" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Circular debt in gas sector hit Rs500bn. OGDC/PPL receivables ballooned.",
+                    "Banking": "High rates = record profits! Banks thrived.",
+                    "Cement": "Demand fell 15% as construction slowed.",
+                    "Fertilizer": "Agriculture struggling. Urea prices volatile.",
+                    "Power": "IPPs protested non-payment. Rs2.3 trillion circular debt.",
+                    "Footwear & Tyres": "Export sales shrank 13%. Local tyre sales grew 20%. Mixed year."
+                }
+            },
+            2020: {
+                market: "KSE-100 up 7.4% to 43,755. COVID crash and recovery.",
+                events: [
+                    { type: "negative", text: "COVID-19 crashed market 37% (43,218 to 27,200 Mar)" },
+                    { type: "positive", text: "V-shaped recovery - 4th best Asian market" },
+                    { type: "positive", text: "Construction package announced - tax amnesty" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Oil crashed to negative in April! Then recovered.",
+                    "Banking": "Rates cut to 7% to support economy. NIMs fell.",
+                    "Cement": "Construction incentives boosted sector. Lucky recovered.",
+                    "Fertilizer": "Agriculture essential - sector stable.",
+                    "Power": "Lockdowns reduced demand. Capacity payments continued.",
+                    "Footwear & Tyres": "COVID DISASTER! Operations suspended. Exports halved. Revenue -6.55%."
+                }
+            },
+            2021: {
+                market: "KSE-100 up 2.7% to 44,596. Post-COVID optimism.",
+                events: [
+                    { type: "positive", text: "Economy rebounded - GDP grew 5.7%" },
+                    { type: "negative", text: "Inflation began rising - 9% average" },
+                    { type: "neutral", text: "Gas circular debt hit Rs700bn" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Oil recovered to $80. But receivables kept growing.",
+                    "Banking": "Rate hike cycle began again. Margins improving.",
+                    "Cement": "Record dispatches. Construction boom resumed.",
+                    "Fertilizer": "Good agricultural year. Urea demand strong.",
+                    "Power": "PPA renegotiations began. IPPs under pressure.",
+                    "Footwear & Tyres": "RECORD REBOUND! Revenue +33.89% (highest ever). Tyre division +37.5%."
+                }
+            },
+            2022: {
+                market: "KSE-100 crashed 9.3% to 40,420. Perfect storm.",
+                events: [
+                    { type: "negative", text: "Catastrophic floods - $40bn damage, 33m affected" },
+                    { type: "negative", text: "Imran Khan ousted - political chaos" },
+                    { type: "negative", text: "Rupee crashed 28% (178 to 227 vs USD)" }
+                ],
+                sectors: {
+                    "Oil & Gas": "OGDC hit low of Rs69 in December. Worst year since 2008.",
+                    "Banking": "Rates hiked to 16%. Banks started profiting again.",
+                    "Cement": "Floods destroyed infrastructure. Rebuilding demand coming.",
+                    "Fertilizer": "Floods devastated crops. Farmer distress hit demand.",
+                    "Power": "Circular debt hit Rs2.5 trillion. IPPs near default.",
+                    "Footwear & Tyres": "Floods disrupted supply chains. Finance costs +133%. Profits flat."
+                }
+            },
+            2023: {
+                market: "KSE-100 surged 54.5% to 62,451. Historic turnaround!",
+                events: [
+                    { type: "positive", text: "IMF $3bn standby arrangement approved" },
+                    { type: "positive", text: "Policy rate at 22% - banks earned record profits" },
+                    { type: "negative", text: "Inflation hit 38% - highest in 50 years" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Recovery began. OGDC up 60% from lows.",
+                    "Banking": "RECORD PROFITS! 82% growth. HBL/UBL/MCB all-time highs.",
+                    "Cement": "Rebuilding from floods. Prices increased 30%.",
+                    "Fertilizer": "Urea prices rose. FFC paid 406% dividend!",
+                    "Power": "IPPs paid 40% of overdue amounts. Relief rally.",
+                    "Footwear & Tyres": "TURNAROUND! Net profit +278%. 83 new retail stores. Now 232 outlets."
+                }
+            },
+            2024: {
+                market: "KSE-100 soared 84.3% to 115,127. WORLD'S BEST MARKET!",
+                events: [
+                    { type: "positive", text: "Pakistan Stock Exchange = #1 globally (Bloomberg)" },
+                    { type: "positive", text: "$7bn IMF Extended Fund approved" },
+                    { type: "positive", text: "Inflation dropped from 38% to 4.5%" }
+                ],
+                sectors: {
+                    "Oil & Gas": "OGDC rallied to Rs290 (near 2014 highs). Recovery complete.",
+                    "Banking": "Continued strong profits. UBL paid Rs44/share dividend.",
+                    "Cement": "Lucky crossed Rs1,200. Infrastructure spending up.",
+                    "Fertilizer": "FFC paid 495% dividend! Gas subsidy debate ongoing.",
+                    "Power": "HUBC up 100%+ as circular debt settlement began.",
+                    "Footwear & Tyres": "SRVI SOARS! Revenue Rs125bn (+29.5%). 248 retail stores. Footwear +70%."
+                }
+            },
+            2025: {
+                market: "KSE-100 at 156,000+ (as of Sep). Rally continues!",
+                events: [
+                    { type: "positive", text: "Foreign investors returned - BlackRock, Morgan Stanley" },
+                    { type: "negative", text: "May: 5.5% crash on India-Pakistan tensions (Pahalgam)" },
+                    { type: "positive", text: "September: All-time high 157,816 points" }
+                ],
+                sectors: {
+                    "Oil & Gas": "Stable. Gas circular debt at Rs3.2 trillion - reforms underway.",
+                    "Banking": "Rate cuts began (22% to 12%). NIMs under pressure.",
+                    "Cement": "Strong demand. Lucky cement market leader.",
+                    "Fertilizer": "Gas price rationalization ongoing. Margins normalizing.",
+                    "Power": "Rs1,225bn circular debt resolved. IPP contracts renegotiated.",
+                    "Footwear & Tyres": "Stock at Rs1,400 (21x from 2010!). Expanding to US/Australia markets."
+                }
+            }
+        };
+
+        // Stock data with sector mapping
+        const stocks = [
+            {
+                id: 'ogdc',
+                name: 'OGDC',
+                fullName: 'Oil & Gas Development Company',
+                sector: 'Oil & Gas',
+                color: 'from-yellow-500 to-orange-500',
+                emoji: '⛽',
+                prices: [145, 150, 165, 220, 287, 180, 165, 145, 125, 115, 95, 90, 69, 125, 251, 245],
+                dividends: [11.0, 10.0, 9.5, 9.0, 9.0, 6.5, 5.5, 5.0, 4.0, 3.2, 2.5, 2.0, 2.5, 8.85, 10.1, 15.05],
+                description: 'Pakistan\'s largest oil & gas E&P company. 75% government owned.',
+                riskLevel: '⚡ High',
+                riskColor: 'text-red-400',
+                dividendStyle: '💰 High Dividends',
+                bestFor: 'Value seekers comfortable with oil price swings'
+            },
+            {
+                id: 'ppl',
+                name: 'PPL',
+                fullName: 'Pakistan Petroleum Limited',
+                sector: 'Oil & Gas',
+                color: 'from-amber-500 to-yellow-500',
+                emoji: '🛢️',
+                prices: [185, 175, 190, 215, 235, 155, 140, 130, 115, 100, 95, 105, 85, 140, 195, 200],
+                dividends: [7.0, 6.5, 6.0, 5.5, 5.0, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 2.0, 2.0, 5.5, 7.5, 5.5],
+                description: 'Second largest E&P company. Operates Sui gas field.',
+                riskLevel: '⚡ High',
+                riskColor: 'text-red-400',
+                dividendStyle: '💵 Moderate Dividends',
+                bestFor: 'Energy sector exposure with moderate income'
+            },
+            {
+                id: 'hbl',
+                name: 'HBL',
+                fullName: 'Habib Bank Limited',
+                sector: 'Banking',
+                color: 'from-green-500 to-emerald-500',
+                emoji: '🏦',
+                prices: [145, 135, 150, 180, 210, 185, 240, 180, 145, 120, 105, 115, 85, 125, 230, 275],
+                dividends: [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 7.5, 7.0, 6.0, 7.5, 7.5, 9.75, 16.25, 17.75],
+                description: 'Pakistan\'s oldest bank (1947). Largest by assets Rs6.1 trillion.',
+                riskLevel: '🔄 Medium',
+                riskColor: 'text-yellow-400',
+                dividendStyle: '💵 Moderate Dividends',
+                bestFor: 'Balanced investors wanting bank stability'
+            },
+            {
+                id: 'ubl',
+                name: 'UBL',
+                fullName: 'United Bank Limited',
+                sector: 'Banking',
+                color: 'from-teal-500 to-green-500',
+                emoji: '💰',
+                prices: [85, 90, 105, 145, 175, 165, 200, 155, 125, 110, 95, 110, 75, 145, 285, 345],
+                dividends: [6.5, 6.0, 6.5, 7.5, 8.5, 9.0, 9.5, 10.0, 10.0, 10.0, 7.5, 10.0, 10.0, 44.0, 44.0, 49.0],
+                description: 'Bestway Group subsidiary. Known for high dividends.',
+                riskLevel: '🔄 Medium',
+                riskColor: 'text-yellow-400',
+                dividendStyle: '💰 High Dividends',
+                bestFor: '⭐ BEGINNERS - Steady dividends + growth potential'
+            },
+            {
+                id: 'luck',
+                name: 'LUCK',
+                fullName: 'Lucky Cement Limited',
+                sector: 'Cement',
+                color: 'from-blue-500 to-indigo-500',
+                emoji: '🏗️',
+                prices: [75, 95, 145, 255, 380, 495, 740, 485, 345, 395, 495, 595, 485, 695, 1050, 1250],
+                dividends: [5.0, 6.0, 7.0, 9.0, 9.0, 9.0, 10.0, 17.0, 8.0, 6.5, 0, 0, 0, 18.0, 15.0, 20.0],
+                description: 'Pakistan\'s largest cement producer. 19% market share.',
+                riskLevel: '⚡ High',
+                riskColor: 'text-red-400',
+                dividendStyle: '📈 Growth Focus',
+                bestFor: 'Long-term growth seekers (CPEC/infrastructure plays)'
+            },
+            {
+                id: 'dgkc',
+                name: 'DGKC',
+                fullName: 'D.G. Khan Cement',
+                sector: 'Cement',
+                color: 'from-cyan-500 to-blue-500',
+                emoji: '🧱',
+                prices: [35, 50, 75, 110, 155, 175, 215, 165, 95, 75, 70, 95, 75, 125, 185, 195],
+                dividends: [3.5, 3.0, 3.0, 5.0, 7.5, 6.0, 7.5, 4.25, 1.0, 1.0, 0, 0, 0, 0, 0, 0],
+                description: 'Part of Nishat Group. Had 8 stock splits historically.',
+                riskLevel: '⚡ High',
+                riskColor: 'text-red-400',
+                dividendStyle: '📈 Growth Focus',
+                bestFor: 'Speculative investors (very volatile, no recent dividends)'
+            },
+            {
+                id: 'ffc',
+                name: 'FFC',
+                fullName: 'Fauji Fertilizer Company',
+                sector: 'Fertilizer',
+                color: 'from-orange-500 to-red-500',
+                emoji: '🌾',
+                prices: [115, 125, 145, 165, 135, 125, 105, 85, 95, 105, 85, 95, 95, 165, 395, 480],
+                dividends: [20.0, 20.0, 19.0, 18.0, 15.0, 14.0, 12.5, 11.0, 9.5, 8.0, 7.5, 9.0, 9.0, 15.5, 40.6, 49.5],
+                description: 'Fauji Group company. 39% market share. Highest dividends.',
+                riskLevel: '🔄 Medium',
+                riskColor: 'text-yellow-400',
+                dividendStyle: '💰 High Dividends',
+                bestFor: '⭐ BEGINNERS - Dividend king! 40-50% annual yields possible'
+            },
+            {
+                id: 'efert',
+                name: 'EFERT',
+                fullName: 'Engro Fertilizers',
+                sector: 'Fertilizer',
+                color: 'from-lime-500 to-green-500',
+                emoji: '🌱',
+                prices: [45, 55, 75, 95, 85, 75, 65, 55, 65, 75, 55, 65, 55, 95, 175, 210],
+                dividends: [0, 2.0, 4.0, 6.0, 5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 4.0, 6.0, 6.5, 20.5, 21.5, 19.0],
+                description: 'Engro Corp subsidiary. World\'s largest single-train urea plant.',
+                riskLevel: '🔄 Medium',
+                riskColor: 'text-yellow-400',
+                dividendStyle: '💵 Moderate Dividends',
+                bestFor: 'Growth + income balance in agriculture sector'
+            },
+            {
+                id: 'hubc',
+                name: 'HUBC',
+                fullName: 'Hub Power Company',
+                sector: 'Power',
+                color: 'from-purple-500 to-pink-500',
+                emoji: '⚡',
+                prices: [45, 55, 65, 85, 95, 85, 75, 65, 55, 65, 75, 85, 55, 95, 175, 215],
+                dividends: [8.5, 8.0, 7.5, 7.0, 7.5, 8.0, 9.5, 11.0, 10.5, 10.0, 9.0, 10.5, 10.5, 19.5, 20.0, 20.0],
+                description: 'Largest IPP. Diversified into coal (CPHGC) and wind.',
+                riskLevel: '🔄 Medium',
+                riskColor: 'text-yellow-400',
+                dividendStyle: '💰 High Dividends',
+                bestFor: '⭐ BEGINNERS - Steady income from power sector'
+            },
+            {
+                id: 'kapco',
+                name: 'KAPCO',
+                fullName: 'Kot Addu Power Company',
+                sector: 'Power',
+                color: 'from-violet-500 to-purple-500',
+                emoji: '🔌',
+                prices: [45, 50, 55, 60, 55, 50, 45, 40, 35, 40, 45, 50, 35, 45, 55, 45],
+                dividends: [7.0, 6.5, 6.0, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0, 3.5, 4.0, 5.5, 5.0, 7.5, 9.5, 8.5],
+                description: 'Furnace oil IPP. Struggling with circular debt & fuel costs.',
+                riskLevel: '⚡ High',
+                riskColor: 'text-red-400',
+                dividendStyle: '💵 Moderate Dividends',
+                bestFor: 'Value hunters only (old plant, declining business)'
+            },
+            {
+                id: 'srvi',
+                name: 'SRVI',
+                fullName: 'Service Industries (Servis)',
+                sector: 'Footwear & Tyres',
+                color: 'from-rose-500 to-pink-500',
+                emoji: '👟',
+                prices: [65, 60, 85, 130, 195, 210, 280, 245, 200, 185, 155, 225, 195, 450, 950, 1400],
+                dividends: [4.0, 3.5, 5.0, 6.0, 7.5, 7.0, 8.0, 8.5, 6.0, 5.0, 4.0, 15.0, 7.5, 5.0, 10.0, 15.0],
+                description: 'Pakistan\'s largest footwear & tyre manufacturer. Servis brand. Exports to 30+ countries.',
+                riskLevel: '🔄 Medium',
+                riskColor: 'text-yellow-400',
+                dividendStyle: '📈 Growth Focus',
+                bestFor: 'Growth investors - 21x return potential! Familiar brand'
+            }
+        ];
+
+        const years = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
+
+        // State
+        let state = {
+            screen: 'select', // select, journey, results
+            selectedStock: null,
+            currentYearIndex: 0,
+            isPlaying: false,
+            investment: 100000,
+            shares: 0,
+            totalDividends: 0,
+            yearlyResults: []
+        };
+
+        let playInterval = null;
+
+        function formatCurrency(num) {
+            if (num >= 10000000) return '₨' + (num / 10000000).toFixed(2) + ' Cr';
+            if (num >= 100000) return '₨' + (num / 100000).toFixed(2) + ' Lac';
+            return '₨' + num.toLocaleString('en-PK');
+        }
+
+        function formatPercent(num) {
+            const sign = num >= 0 ? '+' : '';
+            return sign + num.toFixed(1) + '%';
+        }
+
+        function selectStock(stock) {
+            state.selectedStock = stock;
+            state.shares = Math.floor(state.investment / stock.prices[0]);
+            state.currentYearIndex = 0;
+            state.totalDividends = 0;
+            state.yearlyResults = [];
+            state.screen = 'journey';
+            render();
+        }
+
+        function nextYear() {
+            if (state.currentYearIndex >= years.length - 1) {
+                state.isPlaying = false;
+                if (playInterval) clearInterval(playInterval);
+                state.screen = 'results';
+                render();
+                return;
+            }
+
+            const stock = state.selectedStock;
+            const yearIndex = state.currentYearIndex;
+            const year = years[yearIndex];
+            const price = stock.prices[yearIndex];
+            const nextPrice = stock.prices[yearIndex + 1];
+            const dividend = stock.dividends[yearIndex];
+            const dividendAmount = state.shares * dividend;
+            
+            state.totalDividends += dividendAmount;
+            
+            const priceChange = ((nextPrice - price) / price) * 100;
+            
+            state.yearlyResults.push({
+                year,
+                price,
+                nextPrice,
+                priceChange,
+                dividend,
+                dividendAmount,
+                portfolioValue: state.shares * nextPrice,
+                events: historicalEvents[year]
+            });
+            
+            state.currentYearIndex++;
+            render();
+        }
+
+        function togglePlay() {
+            state.isPlaying = !state.isPlaying;
+            if (state.isPlaying) {
+                playInterval = setInterval(nextYear, 2500);
+            } else {
+                if (playInterval) clearInterval(playInterval);
+            }
+            render();
+        }
+
+        function reset() {
+            state = {
+                screen: 'select',
+                selectedStock: null,
+                currentYearIndex: 0,
+                isPlaying: false,
+                investment: 100000,
+                shares: 0,
+                totalDividends: 0,
+                yearlyResults: []
+            };
+            if (playInterval) clearInterval(playInterval);
+            render();
+        }
+
+        function renderSelectScreen() {
+            const stockCards = stocks.map(stock => `
+                <div onclick="selectStock(stocks.find(s => s.id === '${stock.id}'))" 
+                     class="cursor-pointer bg-gradient-to-br ${stock.color} p-1 rounded-xl hover:scale-105 transition-all duration-300 glow-animation">
+                    <div class="bg-slate-800/90 backdrop-blur rounded-lg p-4 h-full flex flex-col">
+                        <div class="text-3xl mb-1">${stock.emoji}</div>
+                        <h3 class="text-lg font-bold text-white">${stock.name}</h3>
+                        <p class="text-xs text-slate-300 mb-2">${stock.sector}</p>
+                        
+                        <!-- Risk & Dividend badges -->
+                        <div class="flex flex-wrap gap-1 mb-2">
+                            <span class="text-xs ${stock.riskColor} bg-slate-700/50 px-2 py-0.5 rounded-full">${stock.riskLevel}</span>
+                            <span class="text-xs text-purple-300 bg-slate-700/50 px-2 py-0.5 rounded-full">${stock.dividendStyle}</span>
+                        </div>
+                        
+                        <!-- Best For tag -->
+                        <p class="text-xs text-emerald-400 bg-emerald-900/30 px-2 py-1 rounded mb-2">${stock.bestFor}</p>
+                        
+                        <p class="text-xs text-slate-400 flex-grow">${stock.description}</p>
+                        
+                        <div class="mt-3 pt-3 border-t border-slate-700">
+                            <p class="text-xs text-slate-400">Starting Price (2010)</p>
+                            <p class="text-xl font-bold text-white">₨${stock.prices[0]}</p>
+                            <p class="text-xs text-slate-500">You'll buy ${Math.floor(100000/stock.prices[0])} shares</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            return `
+                <div class="text-center mb-8">
+                    <!-- Inspiring Women Logo floating with title -->
+                    <div class="float-animation mb-4">
+                        <img src="iw-logo-white.png" alt="Inspiring Women" class="h-36 md:h-44 mx-auto mb-4">
+                        <h1 class="text-4xl md:text-5xl font-bold text-white">
+                            PSX Investment Journey
+                        </h1>
+                    </div>
+                    <p class="text-white/90 text-lg">Travel through 15 years of Pakistan Stock Exchange history!</p>
+                    <p class="text-white/70">See what happened to ₨100,000 invested in Dec 2010</p>
+                    <div class="mt-4 p-4 bg-white/10 backdrop-blur rounded-lg inline-block">
+                        <p class="text-yellow-300 font-semibold">✨ NEW: Now with historical events!</p>
+                        <p class="text-white/70 text-sm">Learn WHY prices rose or fell each year</p>
+                    </div>
+                </div>
+                
+                <!-- Beginner's Guide Legend -->
+                <div class="bg-white/10 backdrop-blur rounded-xl p-4 mb-6">
+                    <h3 class="text-white font-bold mb-3 text-center">📚 Quick Guide for Beginners</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div class="bg-white/10 rounded-lg p-3">
+                            <p class="font-semibold text-white mb-2">Risk Level:</p>
+                            <p class="text-green-300">🛡️ Low = Stable, less volatile</p>
+                            <p class="text-yellow-300">🔄 Medium = Some ups & downs</p>
+                            <p class="text-red-300">⚡ High = Big swings possible</p>
+                        </div>
+                        <div class="bg-white/10 rounded-lg p-3">
+                            <p class="font-semibold text-white mb-2">Dividend Style:</p>
+                            <p class="text-purple-200">💰 High = Regular cash payments</p>
+                            <p class="text-purple-200">💵 Moderate = Some dividends</p>
+                            <p class="text-purple-200">📈 Growth = Price appreciation focus</p>
+                        </div>
+                        <div class="bg-white/10 rounded-lg p-3">
+                            <p class="font-semibold text-white mb-2">⭐ Beginner Picks:</p>
+                            <p class="text-emerald-300">UBL - Steady bank dividends</p>
+                            <p class="text-emerald-300">FFC - Dividend king (40%+ yields!)</p>
+                            <p class="text-emerald-300">HUBC - Reliable power income</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 class="text-2xl font-bold text-white mb-4 text-center">Choose Your Stock</h2>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+                    ${stockCards}
+                </div>
+                
+                <div class="text-center text-white/60 text-sm bg-white/5 rounded-lg p-4 mt-6">
+                    <p class="font-semibold text-yellow-300 mb-2">⚠️ Important Disclaimer</p>
+                    <p class="mb-2">PSX portal only provides 5 years of historical data. As we could not verify older prices from official sources, we have used various online platforms to compile this data.</p>
+                    <p class="mb-2"><span class="text-yellow-300">Share prices and dividends shown may not be 100% accurate.</span></p>
+                    <p class="mb-2">This game is created to give you a <span class="text-white">flavour of how stocks behave</span> over time - the ups, downs, dividends, and how real events impact prices.</p>
+                    <p class="text-white/50 text-xs mt-3">For official data, contact PSX: marketdatarequest@psx.com.pk</p>
+                </div>
+            `;
+        }
+
+        function renderJourneyScreen() {
+            const stock = state.selectedStock;
+            const yearIndex = state.currentYearIndex;
+            const year = years[yearIndex];
+            const price = stock.prices[yearIndex];
+            const portfolioValue = state.shares * price;
+            const progress = (yearIndex / (years.length - 1)) * 100;
+            const events = historicalEvents[year];
+
+            const resultsRows = state.yearlyResults.map(r => `
+                <tr class="border-b border-slate-700/50 hover:bg-slate-800/50">
+                    <td class="py-2 px-3 text-white font-semibold">${r.year}</td>
+                    <td class="py-2 px-3">₨${r.price}</td>
+                    <td class="py-2 px-3 ${r.priceChange >= 0 ? 'text-green-400' : 'text-red-400'}">
+                        ${formatPercent(r.priceChange)}
+                    </td>
+                    <td class="py-2 px-3 text-yellow-400">₨${r.dividend}/share</td>
+                    <td class="py-2 px-3 text-purple-400">${formatCurrency(r.dividendAmount)}</td>
+                </tr>
+            `).join('');
+
+            const eventCards = events.events.map(e => `
+                <div class="event-card event-${e.type} rounded-lg p-3 mb-2">
+                    <p class="text-sm text-slate-200">${e.type === 'positive' ? '📈' : e.type === 'negative' ? '📉' : '📊'} ${e.text}</p>
+                </div>
+            `).join('');
+
+            return `
+                <div class="text-center mb-6">
+                    <h1 class="text-3xl font-bold text-white mb-2">
+                        ${stock.emoji} ${stock.name} Investment Journey
+                    </h1>
+                    <p class="text-slate-400">${stock.fullName} - ${stock.sector}</p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="mb-6">
+                    <div class="flex justify-between text-sm text-slate-400 mb-1">
+                        <span>2010</span>
+                        <span class="text-white font-bold text-lg">${year}</span>
+                        <span>2025</span>
+                    </div>
+                    <div class="h-4 bg-slate-700 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r ${stock.color} transition-all duration-500" 
+                             style="width: ${progress}%"></div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <!-- Stats Panel -->
+                    <div class="bg-slate-800/70 backdrop-blur rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">📊 Your Portfolio</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-slate-700/50 rounded-lg p-3">
+                                <p class="text-slate-400 text-sm">Shares Owned</p>
+                                <p class="text-2xl font-bold text-white">${state.shares.toLocaleString()}</p>
+                            </div>
+                            <div class="bg-slate-700/50 rounded-lg p-3">
+                                <p class="text-slate-400 text-sm">Current Price</p>
+                                <p class="text-2xl font-bold text-green-400">₨${price}</p>
+                            </div>
+                            <div class="bg-slate-700/50 rounded-lg p-3">
+                                <p class="text-slate-400 text-sm">Portfolio Value</p>
+                                <p class="text-2xl font-bold text-blue-400">${formatCurrency(portfolioValue)}</p>
+                            </div>
+                            <div class="bg-slate-700/50 rounded-lg p-3">
+                                <p class="text-slate-400 text-sm">Total Dividends</p>
+                                <p class="text-2xl font-bold text-yellow-400">${formatCurrency(state.totalDividends)}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Events Panel -->
+                    <div class="bg-slate-800/70 backdrop-blur rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">📰 What Happened in ${year}</h3>
+                        <p class="text-sm text-purple-400 mb-3">${events.market}</p>
+                        ${eventCards}
+                        <div class="mt-3 p-3 bg-slate-900/50 rounded-lg">
+                            <p class="text-xs text-slate-400 font-semibold">${stock.sector} Sector:</p>
+                            <p class="text-sm text-slate-300">${events.sectors[stock.sector]}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-center gap-4 mb-6">
+                    <button onclick="togglePlay()" 
+                            class="px-6 py-3 rounded-lg font-bold transition-all ${state.isPlaying ? 'bg-yellow-500 hover:bg-yellow-600 text-black' : 'bg-green-500 hover:bg-green-600 text-white'}">
+                        ${state.isPlaying ? '⏸️ Pause' : '▶️ Auto Play'}
+                    </button>
+                    <button onclick="nextYear()" 
+                            class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-bold transition-all"
+                            ${state.isPlaying ? 'disabled' : ''}>
+                        ⏭️ Next Year
+                    </button>
+                    <button onclick="reset()" 
+                            class="px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold transition-all">
+                        🔄 Reset
+                    </button>
+                </div>
+
+                <!-- Results Table -->
+                ${state.yearlyResults.length > 0 ? `
+                    <div class="bg-slate-800/70 backdrop-blur rounded-xl p-6 overflow-x-auto">
+                        <h3 class="text-xl font-bold text-white mb-4">📈 Year-by-Year Performance</h3>
+                        <table class="w-full text-slate-300 text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-600">
+                                    <th class="text-left py-2 px-3">Year</th>
+                                    <th class="text-left py-2 px-3">Price</th>
+                                    <th class="text-left py-2 px-3">Change</th>
+                                    <th class="text-left py-2 px-3">Dividend</th>
+                                    <th class="text-left py-2 px-3">Div. Earned</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${resultsRows}
+                            </tbody>
+                        </table>
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        function renderResultsScreen() {
+            const stock = state.selectedStock;
+            const initialPrice = stock.prices[0];
+            const finalPrice = stock.prices[stock.prices.length - 1];
+            const finalValue = state.shares * finalPrice;
+            const totalReturn = finalValue + state.totalDividends;
+            const returnPercent = ((totalReturn - state.investment) / state.investment) * 100;
+            const priceGain = ((finalPrice - initialPrice) / initialPrice) * 100;
+
+            // Find best and worst years
+            const sortedResults = [...state.yearlyResults].sort((a, b) => b.priceChange - a.priceChange);
+            const bestYear = sortedResults[0];
+            const worstYear = sortedResults[sortedResults.length - 1];
+
+            return `
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4 float-animation">🏆</div>
+                    <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400 mb-2">
+                        Investment Complete!
+                    </h1>
+                    <p class="text-slate-300">Your 15-year journey with ${stock.name} (${stock.fullName})</p>
+                </div>
+
+                <div class="bg-gradient-to-br ${stock.color} p-1 rounded-2xl mb-8 glow-animation">
+                    <div class="bg-slate-800/95 backdrop-blur rounded-xl p-8">
+                        <div class="grid md:grid-cols-4 gap-6 text-center">
+                            <div>
+                                <p class="text-slate-400 mb-1">Initial Investment</p>
+                                <p class="text-3xl font-bold text-white">${formatCurrency(state.investment)}</p>
+                                <p class="text-sm text-slate-500">Dec 2010</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 mb-1">Final Stock Value</p>
+                                <p class="text-3xl font-bold text-green-400">${formatCurrency(finalValue)}</p>
+                                <p class="text-sm text-green-500">${formatPercent(priceGain)} price gain</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 mb-1">Total Dividends</p>
+                                <p class="text-3xl font-bold text-yellow-400">${formatCurrency(state.totalDividends)}</p>
+                                <p class="text-sm text-yellow-500">15 years of income</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 mb-1">Total Return</p>
+                                <p class="text-3xl font-bold ${returnPercent >= 0 ? 'text-purple-400' : 'text-red-400'}">${formatCurrency(totalReturn)}</p>
+                                <p class="text-sm ${returnPercent >= 0 ? 'text-purple-500' : 'text-red-500'}">${formatPercent(returnPercent)}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-green-900/30 border border-green-500/30 rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-green-400 mb-3">📈 Best Year: ${bestYear.year}</h3>
+                        <p class="text-slate-300 mb-2">Price changed ${formatPercent(bestYear.priceChange)}</p>
+                        <p class="text-sm text-slate-400">${historicalEvents[bestYear.year].market}</p>
+                        <p class="text-sm text-green-300 mt-2">${historicalEvents[bestYear.year].sectors[stock.sector]}</p>
+                    </div>
+                    <div class="bg-red-900/30 border border-red-500/30 rounded-xl p-6">
+                        <h3 class="text-xl font-bold text-red-400 mb-3">📉 Worst Year: ${worstYear.year}</h3>
+                        <p class="text-slate-300 mb-2">Price changed ${formatPercent(worstYear.priceChange)}</p>
+                        <p class="text-sm text-slate-400">${historicalEvents[worstYear.year].market}</p>
+                        <p class="text-sm text-red-300 mt-2">${historicalEvents[worstYear.year].sectors[stock.sector]}</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800/70 rounded-xl p-6 mb-8">
+                    <h3 class="text-xl font-bold text-white mb-4">📚 Key Lessons from ${stock.sector} Sector</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        ${getSectorLessons(stock.sector)}
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button onclick="reset()" 
+                            class="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white rounded-xl font-bold text-lg transition-all transform hover:scale-105">
+                        🔄 Try Another Stock
+                    </button>
+                </div>
+
+                <div class="mt-8 text-center text-white/60 text-sm bg-white/5 rounded-lg p-4">
+                    <p class="font-semibold text-yellow-300 mb-2">⚠️ Remember</p>
+                    <p class="mb-1">This is an educational simulation to show how stocks behave over time.</p>
+                    <p class="mb-1">Prices and dividends are compiled from various sources and may not be 100% accurate.</p>
+                    <p class="text-white">Past performance doesn't guarantee future returns.</p>
+                </div>
+            `;
+        }
+
+        function getSectorLessons(sector) {
+            const lessons = {
+                "Oil & Gas": [
+                    { title: "Global Oil Prices Matter", text: "When oil crashed in 2014-15, OGDC/PPL fell 50%+. Global commodity cycles directly impact E&P stocks." },
+                    { title: "Circular Debt Challenge", text: "Rs3.2 trillion stuck in receivables. Government's inability to pay affects dividends." },
+                    { title: "Production Decline", text: "No major discoveries since 2010. Gas production fell from 4.3 to 3.2 bcfd." },
+                    { title: "Government Ownership", text: "75-85% government owned means dividends often delayed for fiscal reasons." }
+                ],
+                "Banking": [
+                    { title: "Interest Rates = Profits", text: "When SBP raised rates to 22% in 2023, banks earned RECORD profits (82% growth)." },
+                    { title: "Government Borrowing", text: "Banks lend 50%+ to government. Safe but crowds out private sector." },
+                    { title: "Economic Barometer", text: "Banking profits reflect overall economy. Crisis = NPLs up, profits down." },
+                    { title: "Dividend Champions", text: "UBL paid Rs44-49/share in 2023-25. High payout ratios common in sector." }
+                ],
+                "Cement": [
+                    { title: "CPEC Boom (2013-17)", text: "Lucky cement 10x return during infrastructure building phase." },
+                    { title: "Oversupply Risk", text: "Capacity additions led to price wars in 2018-19. Stock crashed 50%." },
+                    { title: "Construction Cycles", text: "Housing construction = 60-70% of demand. Real estate matters." },
+                    { title: "Energy Costs", text: "Coal/electricity costs impact margins significantly." }
+                ],
+                "Fertilizer": [
+                    { title: "Gas Subsidy = Profits", text: "Subsidized gas (Rs580/mmbtu vs Rs1,597 market) meant huge margins." },
+                    { title: "Policy Risk", text: "2024 gas price rationalization compressed margins overnight." },
+                    { title: "Agriculture Link", text: "Monsoons, floods, crop prices all affect urea demand." },
+                    { title: "Dividend Kings", text: "FFC paid 406% dividend in 2024 (Rs40.6/share on Rs10 face value)!" }
+                ],
+                "Power": [
+                    { title: "Capacity Payments", text: "IPPs get paid even if electricity not used. Guaranteed returns." },
+                    { title: "Circular Debt Monster", text: "Rs2.5+ trillion unpaid. KAPCO worst affected as old plant." },
+                    { title: "PPA Renegotiations", text: "Government pressuring IPPs to take haircuts on contracts." },
+                    { title: "Diversification", text: "HUBC diversified into coal, wind. KAPCO stuck with old furnace oil." }
+                ],
+                "Footwear & Tyres": [
+                    { title: "GSP Plus Game Changer", text: "EU duty-free access since 2014 boosted exports 121%. EU share reached 69% of exports." },
+                    { title: "Dual Business Model", text: "SRVI: 76% revenue from tyres, 22% from footwear. Diversification protects during downturns." },
+                    { title: "Retail Expansion Strategy", text: "From 149 stores (2022) to 248+ (2024). Retail growth drove footwear +70% in 2024." },
+                    { title: "Export Vulnerability", text: "COVID halved exports in 2020. Rupee depreciation helps exports but hurts raw material costs." }
+                ]
+            };
+            
+            return lessons[sector].map(l => `
+                <div class="bg-slate-700/50 rounded-lg p-4">
+                    <h4 class="font-bold text-white mb-1">${l.title}</h4>
+                    <p class="text-sm text-slate-300">${l.text}</p>
+                </div>
+            `).join('');
+        }
+
+        function render() {
+            const app = document.getElementById('app');
+            
+            // Footer only (header removed)
+            const footer = `
+                <div class="iw-footer rounded-b-xl px-6 py-4 mt-8">
+                    <div class="flex items-center justify-center gap-3">
+                        <img src="iw-logo-white.png" alt="Inspiring Women" class="h-12 opacity-90">
+                        <div class="text-center">
+                            <p class="text-white/90 text-sm">PSX Investment Journey</p>
+                            <p class="text-white/60 text-xs">© ${new Date().getFullYear()} All Rights Reserved</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            let content = '';
+            switch(state.screen) {
+                case 'select':
+                    content = renderSelectScreen();
+                    break;
+                case 'journey':
+                    content = renderJourneyScreen();
+                    break;
+                case 'results':
+                    content = renderResultsScreen();
+                    break;
+            }
+            
+            app.innerHTML = content + footer;
+        }
+
+        // Make stocks available globally for onclick
+        window.stocks = stocks;
+
+        // Initial render
+        render();
+    </script>
+</body>
+</html>
